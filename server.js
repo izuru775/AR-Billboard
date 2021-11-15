@@ -8,7 +8,9 @@ app.use(express.static("public"));
 // function getRandomInt(max) {
 //     return Math.floor(Math.random() * Math.floor(max));
 //   }
-
+app.get('/',(req,res)=>{
+    res.send('index.html');
+})      
 
 app.get('/adder',function(req,res){
     let num1=parseInt(req.query.num1);

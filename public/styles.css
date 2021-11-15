@@ -1,8 +1,3 @@
-.active1{
-    color: darkgrey;
-   background-color: grey;
-}
-
 /* Set the size of the div element that contains the map */
 #map {
     height: 400px;

@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script src="./index.js"></script>
+  <link rel="stylesheet" href="styles.css">
+  <title>Document</title>
+</head>
+<body>
+  
+  <label for="lng">Longitudes</label>
+  <input type="text" name="longitudes" id="lng">
+  <label for="lat">Latitudes</label>
+  <input type="text" name="latitudes" id="lat">
+  <button onclick="myFunction()">Click me</button>
+
+  
+  <h3>My Google Maps Demo</h3>
+  <!--The div element for the map -->
+  <div id="map"></div>
+
+  <!-- Async script executes immediately and must be after any DOM elements used in callback. -->
+  <script
+    src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCnImliQVPh6bl0Loyxt2hk45sVPKbfmKU&callback=initMap&libraries=&v=weekly"
+    async
+  ></script>
+</body>
+</html>
