@@ -11,11 +11,14 @@ export class MapContainer extends Component {
   };
     
     onMarkerClick = (props, marker, e) =>
+    {
     this.setState({
       selectedPlace: props,
       activeMarker: marker,
       showingInfoWindow: true
-    });
+    })
+    
+  };
 
   onClose = props => {
     if (this.state.showingInfoWindow) {
@@ -28,6 +31,7 @@ export class MapContainer extends Component {
   
     render() {
     return (
+      
         <CurrentLocation
             centerAroundCurrentLocation
             google={this.props.google}
@@ -46,12 +50,14 @@ export class MapContainer extends Component {
             <h4>{this.state.selectedPlace.name}</h4>
           </div>
         </InfoWindow>
+        
         </CurrentLocation>
+        
     );
   }
 
 }
 
 export default GoogleApiWrapper({
-  apiKey: process.env.REACT_APP_GOOGLE_MAPS_API_KEY
+  apiKey: 'AIzaSyCnImliQVPh6bl0Loyxt2hk45sVPKbfmKU'
 })(MapContainer);

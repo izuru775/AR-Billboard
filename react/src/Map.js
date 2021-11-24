@@ -54,10 +54,10 @@ export class CurrentLocation extends React.Component {
               lng: coords.longitude
             }
           });
+          this.loadMap();
         });
       }
     }
-    this.loadMap();
   }
   
   loadMap() {
@@ -66,9 +66,12 @@ export class CurrentLocation extends React.Component {
       const { google } = this.props;
       const maps = google.maps;
 
+
+
       const mapRef = this.refs.map;
 
-      // reference to the actual DOM element
+      // reference to the actual DOM element      this.calcRoute();
+
       const node = ReactDOM.findDOMNode(mapRef);
 
       let { zoom } = this.props;
@@ -85,7 +88,35 @@ export class CurrentLocation extends React.Component {
 
       // maps.Map() is constructor that instantiates the map
       this.map = new maps.Map(node, mapConfig);
+      
+      this.calcRoute();
     }
+  }
+
+  calcRoute() {
+    const map = this.map;
+    const current = this.state.currentLocation;
+    const google = this.props.google;
+    const maps = google.maps;
+    const directionsService = new google.maps.DirectionsService();
+    const directionsRenderer = new google.maps.DirectionsRenderer();
+    directionsRenderer.setMap(map);
+
+    var selectedMode = 'DRIVING'
+    console.log(current.lat, current.lng);
+    let destination = new google.maps.LatLng(-37.804576094048755, 144.95707888255419);
+    let origin = new google.maps.LatLng(current.lat, current.lng);
+
+    var request = {
+      origin: origin,
+      destination: destination,
+        travelMode: google.maps.TravelMode[selectedMode]
+    };
+    directionsService.route(request, function(response, status) {
+      if (status == 'OK') {
+        directionsRenderer.setDirections(response);
+      }
+    });
   }
   
   renderChildren() {
