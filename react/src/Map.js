@@ -1,5 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
+import {Marker} from "google-maps-react";
 
 const mapStyles = {
   map: {
@@ -39,6 +40,16 @@ export class CurrentLocation extends React.Component {
 
     if (map) {
       let center = new maps.LatLng(current.lat, current.lng);
+      let marker = new google.maps.Circle({
+        center: center, 
+        radius: 2,
+        strokeColor: "#0037ff",
+      strokeOpacity: 1,
+      strokeWeight: 2,
+      fillColor: "#0037ff",
+      fillOpacity: 1,
+        map: map
+      });
       map.panTo(center);
     }
   }
@@ -46,7 +57,7 @@ export class CurrentLocation extends React.Component {
   componentDidMount() {
     if (this.props.centerAroundCurrentLocation) {
       if (navigator && navigator.geolocation) {
-        navigator.geolocation.getCurrentPosition(pos => {
+        navigator.geolocation.watchPosition(pos => {
           const coords = pos.coords;
           this.setState({
             currentLocation: {
@@ -99,9 +110,10 @@ export class CurrentLocation extends React.Component {
       return React.cloneElement(c, {
         map: this.map,
         google: this.props.google,
-        mapCenter: this.state.currentLocation
+        mapCenter: this.state.currentLocation,
       });
     });
+
   }
   
   render() {
@@ -116,11 +128,10 @@ export class CurrentLocation extends React.Component {
       </div>
     );
   }
-  
 }
 
   CurrentLocation.defaultProps = {
-  zoom: 14,
+  zoom: 16,
   initialCenter: {
     lat: -1.2884,
     lng: 36.8233

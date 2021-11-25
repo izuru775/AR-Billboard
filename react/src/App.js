@@ -1,7 +1,41 @@
 import React, { Component } from 'react';
 import { GoogleApiWrapper, InfoWindow, Marker } from 'google-maps-react';
 
+import Modal from "./Modal"
 import CurrentLocation from './Map';
+
+const markers = [
+    {
+        name: "Location 1",
+        lat: "-37.80625873487332",
+        lng: "144.9592512868676",
+        billboard: "public/images/..."
+    },
+    {
+        name: "Location 2",
+        lat: "-37.80794563234061",
+        lng: " 144.95793168189437",
+        billboard: "public/images/..."
+    },
+    {
+        name: "Location 3",
+        lat: "-37.80486340798545",
+        lng: "144.96691989317253",
+        billboard: "public/images/..."
+    },
+    {
+        name: "Location 4",
+        lat: "-37.792203120470745",
+        lng: "144.9713367741883",
+        billboard: "public/images/..."
+    },
+    { 
+        name: "Location 5",
+        lat: "-37.77931015685815",
+        lng: "144.95515622038786",
+        billboard: "public/images/..."
+    }
+]
 
 export class MapContainer extends Component {
     state = {
@@ -25,18 +59,24 @@ export class MapContainer extends Component {
       });
     }
   };
-  
     render() {
+        const Markers = markers.map((marker) =>
+            <Marker onClick={this.onMarkerClick} name={marker.name}
+            position={{lat: marker.lat, lng: marker.lng}}/>
+        );
+
     return (
+        <div id='main'>
+            <Modal/>
+
+
         <CurrentLocation
             centerAroundCurrentLocation
             google={this.props.google}
         >
 
-        <Marker
-          onClick={this.onMarkerClick}
-          name={'Current Location'}
-        />
+        {Markers}
+        
         <InfoWindow
           marker={this.state.activeMarker}
           visible={this.state.showingInfoWindow}
@@ -47,6 +87,7 @@ export class MapContainer extends Component {
           </div>
         </InfoWindow>
         </CurrentLocation>
+        </div>
     );
   }
 
