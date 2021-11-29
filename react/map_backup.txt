@@ -1,4 +1,4 @@
-import React from 'react';
+ import React from 'react';
 import ReactDOM from 'react-dom';
 
 const mapStyles = {
@@ -28,12 +28,6 @@ export class CurrentLocation extends React.Component {
     }
     if (prevState.currentLocation !== this.state.currentLocation) {
       this.recenterMap();
-    }
-    if (this.props.activeMarker != null) {
-      this.calcRoute(true)
-    }
-    else if (prevProps.activeMarker != null && this.props.activeMarker == null) {
-      this.calcRoute(false);
     }
   }
   
@@ -70,13 +64,10 @@ export class CurrentLocation extends React.Component {
               lng: coords.longitude
             }
           });
-
-          // this.calcRoute();
+          this.loadMap();
         });
       }
     }
-
-    this.loadMap();
   }
   
   loadMap() {
@@ -108,45 +99,34 @@ export class CurrentLocation extends React.Component {
       // maps.Map() is constructor that instantiates the map
       this.map = new maps.Map(node, mapConfig);
       
+      // this.calcRoute();
     }
   }
 
-  calcRoute(route) {
-
-    const google = this.props.google;
-    const maps = google.maps;
-    let directionsService = new google.maps.DirectionsService();
-        if (global.directionsRenderer == null) {
-          global.directionsRenderer = new google.maps.DirectionsRenderer();
-        }
-      let map = null;
-      if (route) {
-        map = this.map;
-        global.directionsRenderer.setMap(map);
-      }
-      else {
-        global.directionsRenderer.setMap(null);
-      return;
-      }
-      
-    const current = this.state.currentLocation;
-    
-
-    var selectedMode = 'WALKING'
-    let destination = new google.maps.LatLng(this.props.selectedPlace.position.lat, this.props.selectedPlace.position.lng);
-    let origin = new google.maps.LatLng(current.lat, current.lng);
-
-    var request = {
-      origin: origin,
-      destination: destination,
-        travelMode: google.maps.TravelMode[selectedMode]
-    };
-    directionsService.route(request, function(response, status) {
-      if (status == 'OK') {
-        global.directionsRenderer.setDirections(response);
-      }
-    });
-  }
+  // calcRoute() {
+  //   const map = this.map;
+  //   const current = this.state.currentLocation;
+  //   const google = this.props.google;
+  //   const maps = google.maps;
+  //   const directionsService = new google.maps.DirectionsService();
+  //   const directionsRenderer = new google.maps.DirectionsRenderer();
+  //   directionsRenderer.setMap(map);
+  //
+  //   var selectedMode = 'DRIVING'
+  //   let destination = new google.maps.LatLng(-37.804576094048755, 144.95707888255419);
+  //   let origin = new google.maps.LatLng(current.lat, current.lng);
+  //
+  //   var request = {
+  //     origin: origin,
+  //     destination: destination,
+  //       travelMode: google.maps.TravelMode[selectedMode]
+  //   };
+  //   directionsService.route(request, function(response, status) {
+  //     if (status == 'OK') {
+  //       directionsRenderer.setDirections(response);
+  //     }
+  //   });
+  // }
   
   renderChildren() {
     const { children } = this.props;
