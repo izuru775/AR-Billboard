@@ -42,6 +42,13 @@ export class MapContainer extends Component {
                     });
                 })
             })
+            // Geolocation to get current position
+            if (navigator.geolocation) {
+              navigator.geolocation.watchPosition(function(position) {
+                console.log("Latitude is :", position.coords.latitude);
+                console.log("Longitude is :", position.coords.longitude);
+              });
+            }
     }
   
     render() {
@@ -51,7 +58,7 @@ export class MapContainer extends Component {
         );
 
     return (
-        <div id='main'>
+        <>
             <Modal/>
         <CurrentLocation
             centerAroundCurrentLocation
@@ -73,7 +80,7 @@ export class MapContainer extends Component {
         </InfoWindow>
         
         </CurrentLocation>
-        </div>
+        </>
     );
   }
 
