@@ -33,7 +33,7 @@ export class MapContainer extends Component {
   
   // Fetches squads from database and joins to the projects and tribes entities.
     componentDidMount() {
-        const url = new URL("http:/localhost:3001/api/data")
+        const url = new URL("http://localhost:3001/api/data")
         fetch(url)
             .then(response => {
                 response.json().then(jsonResponse => {
